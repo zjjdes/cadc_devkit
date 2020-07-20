@@ -40,6 +40,7 @@ install_manifest.txt
 build
 lib
 bin
+data
 
 # Text editor temporary files
 *~
@@ -63,6 +64,7 @@ callgrind*
 
 # vscide project files
 .vscode/
+.history/
 
 # git conflicts file
 *.orig

@@ -5,28 +5,30 @@ import json
 import matplotlib.patches as patches
 
 
-frame = 12
+frame = 0
 cam = '0'
-seq = '0033'
-DISTORTED = False
-MOVE_FORWARD = True
-DISPLAY_LIDAR = False
+seq = '0011'
+MOVE_FORWARD = False
+DISPLAY_LIDAR = True
 DISPLAY_CUBOID_CENTER = False
 MIN_CUBOID_DIST = 40.0
 
-BASE = '/media/matthew/WAVELAB_2TB/winter/data/'
+# BASE = '/media/matthew/WAVELAB_2TB/winter/data/'
 # BASE = '/media/matthew/MOOSE-4TB/2019_02_27/'
 # BASE = '/media/matthew/MOOSE-4TB/2018_03_06/data/'
 # BASE = '/media/matthew/MOOSE-4TB/2018_03_07/data/'
+BASE = "G:/LiDAR datasets/cadc_devkit/data/cadcd/2019_02_27/"
 
-if DISTORTED:
-  path_type = 'raw'
-else:
-  path_type = 'processed'
+DISTORTED = False
+# if DISTORTED:
+#   path_type = 'raw'
+# else:
+#   path_type = 'processed'
+path_type = 'labeled'
 
-lidar_path = BASE + seq + "/" + path_type + "/lidar_points/data/" + format(frame, '010') + ".bin";
-calib_path = "/media/matthew/WAVELAB_2TB/winter/calib/";
-img_path =  BASE + seq + "/" + path_type + "/image_0" + cam + "/data/" + format(frame, '010') + ".png";
+lidar_path = BASE + seq + "/" + path_type + "/lidar_points/data/" + format(frame, '010') + ".bin"
+calib_path = BASE + "calib/"
+img_path = BASE + seq + "/" + path_type + "/image_0" + cam + "/data/" + format(frame, '010') + ".png"
 annotations_path =  BASE + seq + "/3d_ann.json";
 
 def bev(s1,s2,f1,f2,frame,lidar_path,annotations_path):
@@ -121,7 +123,7 @@ def bev(s1,s2,f1,f2,frame,lidar_path,annotations_path):
     for cuboid in annotations_data[frame]['cuboids']:
         T_Lidar_Cuboid = np.eye(4);  # identify matrix
         T_Lidar_Cuboid[0:3, 0:3] = R.from_euler('z', cuboid['yaw'],
-                                                degrees=False).as_dcm();  # rotate the identity matrix
+                                                degrees=False).as_matrix();  # rotate the identity matrix
         T_Lidar_Cuboid[0][3] = cuboid['position']['x'];  # center of the tracklet, from cuboid to lidar
         T_Lidar_Cuboid[1][3] = cuboid['position']['y'];
         T_Lidar_Cuboid[2][3] = cuboid['position']['z'];
@@ -230,6 +232,6 @@ def bev(s1,s2,f1,f2,frame,lidar_path,annotations_path):
     ax.yaxis.set_visible(False)  # Do not draw axis tick marks
     plt.xlim([0, x_max])
     plt.ylim([0, y_max])  
-    fig.savefig("/home/matthew/Desktop/bev_" + str(frame) + ".png", dpi=dpi, bbox_inches='tight', pad_inches=0.0)
+    fig.savefig(BASE + seq + "/" + path_type + "/bev_" + str(frame) + ".png", dpi=dpi, bbox_inches='tight', pad_inches=0.0)
 
 bev(50,50,50,50,frame,lidar_path,annotations_path)
