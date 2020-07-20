@@ -5,7 +5,7 @@ import cv2
 import load_calibration
 from lidar_utils import lidar_utils
 
-frame =56
+frame =0
 cam = '0'
 seq = '0011'
 BASE = "G:/LiDAR datasets/cadc_devkit/data/cadcd/2019_02_27/"
@@ -18,7 +18,7 @@ DISTORTED = False
 
 path_type = 'labeled'
 
-MOVE_FORWARD = False
+MOVE_FORWARD = True
 
 lidar_path = BASE + seq + "/" + path_type + "/lidar_points/data/" + format(frame, '010') + ".bin"
 calib_path = BASE + "calib/"
@@ -52,6 +52,6 @@ while True:
 
   if MOVE_FORWARD:
     frame += 1
-    lidar_path = BASE + seq + "/" + path_type + "/lidar_points_corrected/data/" + format(frame, '010') + ".bin"
+    lidar_path = BASE + seq + "/" + path_type + "/lidar_points/data/" + format(frame, '010') + ".bin"
     img_path = BASE + seq + "/" + path_type + "/image_0" + cam + "/data/" + format(frame, '010') + ".png"
     img = cv2.imread(img_path)

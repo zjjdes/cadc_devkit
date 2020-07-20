@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 import load_novatel_data, convert_novatel_to_pose
 
-novatel_path = 'G:/LiDAR datasets/cadc_devkit/data/cadcd/2018_03_06/0002/labeled/novatel/data/'
+novatel_path = 'G:/LiDAR datasets/cadc_devkit/data/cadcd/2019_02_27/0011/labeled/novatel/data/'
 
 novatel = load_novatel_data.load_novatel_data(novatel_path)
 poses = convert_novatel_to_pose.convert_novatel_to_pose(novatel)

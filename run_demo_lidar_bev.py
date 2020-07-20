@@ -5,7 +5,7 @@ import json
 import matplotlib.patches as patches
 
 
-frame = 0
+frame = 39
 cam = '0'
 seq = '0011'
 MOVE_FORWARD = False
